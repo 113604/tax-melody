@@ -1385,3 +1385,197 @@
     font-size: .54rem !important;
   }
 }
+
+
+/* =========================================================
+   手機結算 V3：自然上下配置，避免大片空白與比例失衡
+   ========================================================= */
+@media (max-width: 680px) and (orientation: portrait) {
+  .result-screen.active {
+    display: block !important;
+    width: 100% !important;
+    height: 100dvh !important;
+    min-height: 100dvh !important;
+    padding: 6px !important;
+    overflow: hidden !important;
+  }
+
+  .result-panel {
+    width: 100% !important;
+    height: calc(100dvh - 12px) !important;
+    min-height: 0 !important;
+    padding: 11px 10px 10px !important;
+    display: grid !important;
+    grid-template-rows: auto auto auto minmax(0,1fr) auto !important;
+    gap: 4px !important;
+    overflow: hidden !important;
+    border-radius: 24px !important;
+  }
+
+  .result-panel .eyebrow {
+    margin: 0 !important;
+    font-size: .5rem !important;
+    text-align: center !important;
+  }
+
+  .result-panel h2 {
+    margin: 0 !important;
+    font-size: clamp(1.45rem, 7vw, 1.9rem) !important;
+    line-height: 1 !important;
+    text-align: center !important;
+  }
+
+  .stars {
+    margin: 1px 0 4px !important;
+    font-size: 1.25rem !important;
+    line-height: 1 !important;
+    text-align: center !important;
+  }
+
+  .result-body {
+    min-height: 0 !important;
+    margin: 0 !important;
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    grid-template-rows: minmax(0,1fr) auto auto !important;
+    gap: 7px !important;
+    overflow: hidden !important;
+  }
+
+  .result-left {
+    display: contents !important;
+  }
+
+  .result-hero {
+    grid-row: 1 !important;
+    min-height: 0 !important;
+    height: 100% !important;
+    border-radius: 20px !important;
+    overflow: hidden !important;
+    display: flex !important;
+    align-items: flex-end !important;
+    justify-content: center !important;
+  }
+
+  .result-hero::before {
+    width: 160px !important;
+    height: 160px !important;
+  }
+
+  .result-tiger {
+    width: auto !important;
+    height: auto !important;
+    max-width: 88% !important;
+    max-height: 34dvh !important;
+    object-fit: contain !important;
+    transform: translateY(5px) !important;
+    animation: none !important;
+  }
+
+  .result-rank-circle {
+    left: 9px !important;
+    top: 9px !important;
+    width: 64px !important;
+    height: 64px !important;
+    border-width: 3px !important;
+    animation: none !important;
+  }
+
+  .result-rank-circle small {
+    font-size: .38rem !important;
+  }
+
+  .result-rank-circle strong {
+    font-size: 1.75rem !important;
+  }
+
+  .rank-badge {
+    display: none !important;
+  }
+
+  .result-summary {
+    grid-row: 2 !important;
+    padding: 7px !important;
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0,1fr)) !important;
+    gap: 6px !important;
+    border-radius: 16px !important;
+  }
+
+  .result-summary p {
+    min-width: 0 !important;
+    padding: 6px 3px !important;
+    display: grid !important;
+    justify-items: center !important;
+    gap: 2px !important;
+    border-bottom: 0 !important;
+    border-radius: 12px !important;
+    background: rgba(255,255,255,.56) !important;
+  }
+
+  .result-summary p span {
+    font-size: .46rem !important;
+    text-align: center !important;
+  }
+
+  .result-summary p strong {
+    font-size: .82rem !important;
+    text-align: center !important;
+  }
+
+  .result-grid {
+    grid-row: 3 !important;
+    min-height: 0 !important;
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0,1fr)) !important;
+    gap: 6px !important;
+  }
+
+  .result-grid > div {
+    min-height: 58px !important;
+    padding: 7px 2px !important;
+    border-radius: 14px !important;
+  }
+
+  .result-grid span {
+    font-size: .43rem !important;
+  }
+
+  .result-grid strong {
+    margin-top: 2px !important;
+    font-size: .92rem !important;
+  }
+
+  .result-actions {
+    width: 100% !important;
+    margin: 4px 0 0 !important;
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0,1fr)) !important;
+    gap: 6px !important;
+  }
+
+  .result-actions .btn {
+    min-width: 0 !important;
+    min-height: 40px !important;
+    padding: 6px 4px !important;
+    border-radius: 13px !important;
+    font-size: .6rem !important;
+    line-height: 1.15 !important;
+    white-space: normal !important;
+  }
+}
+
+@media (max-width: 390px) and (orientation: portrait) {
+  .result-tiger {
+    max-height: 31dvh !important;
+  }
+
+  .result-grid > div {
+    min-height: 52px !important;
+  }
+
+  .result-actions .btn {
+    min-height: 37px !important;
+    font-size: .55rem !important;
+  }
+}
