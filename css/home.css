@@ -350,3 +350,101 @@ button,select,input{font:inherit}button{cursor:pointer}.app-shell{width:100%;hei
     display: flex;
   }
 }
+
+
+/* =========================================================
+   手機首頁 V4：上方功能鍵不再遮住 Tax Melody 標題
+   ========================================================= */
+@media (max-width: 768px) and (orientation: portrait) {
+  #homeScreen.home-screen,
+  .home-stage {
+    min-height: 100dvh;
+    height: 100dvh;
+    overflow: hidden !important;
+  }
+
+  /* 圖片往下讓出獨立功能列空間 */
+  .home-picture {
+    top: 66px !important;
+    height: calc(100% - 66px) !important;
+  }
+
+  .home-picture .home-bg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover !important;
+    object-position: center top !important;
+  }
+
+  .home-agency {
+    display: none !important;
+  }
+
+  .home-top-nav {
+    top: max(6px, env(safe-area-inset-top)) !important;
+    left: 10px !important;
+    right: 10px !important;
+    height: 54px;
+    padding: 5px 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center !important;
+    gap: 8px !important;
+    border: 1px solid rgba(255,255,255,.92);
+    border-radius: 20px;
+    background: rgba(255,255,255,.86);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 8px 24px rgba(51,67,132,.14);
+  }
+
+  .home-top-nav button {
+    width: 44px !important;
+    height: 44px !important;
+    flex: 0 0 44px !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  .home-top-nav span {
+    font-size: 17px !important;
+  }
+
+  .home-top-nav small {
+    margin-top: 1px !important;
+    font-size: 7px !important;
+  }
+
+  .start-song-btn {
+    bottom: 25.5% !important;
+  }
+
+  .home-shortcuts {
+    bottom: 5.5% !important;
+  }
+}
+
+@media (max-width: 430px) and (orientation: portrait) {
+  .home-picture {
+    top: 62px !important;
+    height: calc(100% - 62px) !important;
+  }
+
+  .home-top-nav {
+    height: 50px;
+  }
+
+  .home-top-nav button {
+    width: 40px !important;
+    height: 40px !important;
+    flex-basis: 40px !important;
+  }
+
+  .start-song-btn {
+    bottom: 24.5% !important;
+  }
+
+  .home-shortcuts {
+    bottom: 4.5% !important;
+  }
+}
