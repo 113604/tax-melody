@@ -313,6 +313,8 @@ window.UI = {
     if (songCountBadge) songCountBadge.textContent = `${songs.length} 首`;
     if (totalSongCount) totalSongCount.textContent = songs.length;
 
+    this.renderMobileAlbumSelector(songs, selected, scores);
+
     list.innerHTML = songs
       .map((song, index) => {
         const score = scores[`${song.id}:${this.currentDifficulty}`];
@@ -354,18 +356,6 @@ window.UI = {
         this.currentSong = song;
         this.renderSongs();
         this.playPreview(song);
-
-        if (window.matchMedia("(max-width: 680px)").matches) {
-          requestAnimationFrame(() => {
-            document
-              .querySelector(`[data-select-song="${song.id}"]`)
-              ?.scrollIntoView({
-                behavior: "smooth",
-                block: "nearest",
-                inline: "center"
-              });
-          });
-        }
       };
     });
 
@@ -387,6 +377,99 @@ window.UI = {
 
       missionProgressBar.style.width = `${percent}%`;
     }
+  },
+
+
+  renderMobileAlbumSelector(songs, selected, scores) {
+    const carousel = document.getElementById("mobileAlbumCarousel");
+    if (!carousel) return;
+
+    const title = document.getElementById("mobileSelectedSongTitle");
+    const subtitle = document.getElementById("mobileSelectedSongSubtitle");
+    const difficultyLabel = document.getElementById("mobileDifficultyLabel");
+    const startButton = document.getElementById("mobileStartChallenge");
+
+    if (title) title.textContent = selected.title || "未命名歌曲";
+    if (subtitle) subtitle.textContent = selected.subtitle || "";
+    if (difficultyLabel) {
+      difficultyLabel.textContent = this.currentDifficulty.toUpperCase();
+    }
+
+    carousel.innerHTML = songs.map((song) => {
+      const active = song.id === selected.id;
+      const score = scores[`${song.id}:${this.currentDifficulty}`];
+
+      return `
+        <button type="button"
+                class="mobile-album-card ${active ? "active" : ""}"
+                data-mobile-album="${song.id}"
+                aria-label="選擇${song.title || "歌曲"}">
+          <img src="${song.cover || ""}" alt="${song.title || "歌曲"}專輯封面">
+          <b>${song.title || "未命名歌曲"}</b>
+          <small>${score ? `BEST ${Number(score.score || 0).toLocaleString()}` : "NO RECORD"}</small>
+          <span>${song.available ? "▶" : "🔒"}</span>
+        </button>
+      `;
+    }).join("");
+
+    carousel.querySelectorAll("[data-mobile-album]").forEach((button) => {
+      button.onclick = () => {
+        const song = songs.find((item) => item.id === button.dataset.mobileAlbum);
+        if (!song) return;
+
+        this.selectedSongId = song.id;
+        this.currentSong = song;
+        this.renderSongs();
+        this.playPreview(song);
+
+        requestAnimationFrame(() => {
+          document
+            .querySelector(`[data-mobile-album="${song.id}"]`)
+            ?.scrollIntoView({
+              behavior: "smooth",
+              block: "nearest",
+              inline: "center"
+            });
+        });
+      };
+    });
+
+    document.querySelectorAll("[data-mobile-difficulty]").forEach((button) => {
+      const isActive = button.dataset.mobileDifficulty === this.currentDifficulty;
+      button.classList.toggle("active", isActive);
+
+      button.onclick = () => {
+        this.currentDifficulty = button.dataset.mobileDifficulty || "easy";
+        this.renderSongs();
+      };
+    });
+
+    if (startButton) {
+      startButton.disabled = !selected.available;
+      startButton.textContent = selected.available ? "▶ 開始挑戰" : "🔒 尚未開放";
+      startButton.classList.toggle("locked", !selected.available);
+
+      startButton.onclick = () => {
+        if (!selected.available) {
+          this.toast("這首歌尚未加入音檔");
+          return;
+        }
+
+        this.stopPreview(false);
+        this.currentSong = selected;
+        TMGame.start(selected, this.currentDifficulty);
+      };
+    }
+
+    requestAnimationFrame(() => {
+      carousel
+        .querySelector(".mobile-album-card.active")
+        ?.scrollIntoView({
+          behavior: "auto",
+          block: "nearest",
+          inline: "center"
+        });
+    });
   },
 
   getLearningData(song) {
