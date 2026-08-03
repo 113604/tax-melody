@@ -924,3 +924,192 @@ canvas {
     padding-bottom: max(6px, env(safe-area-inset-bottom));
   }
 }
+
+
+/* =========================================================
+   手機橫向首頁專用版
+   解決手機橫放時看起來仍像桌機版、下方按鈕被截掉
+   ========================================================= */
+@media (orientation: landscape) and (max-height: 720px) and (pointer: coarse) {
+  html,
+  body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden !important;
+  }
+
+  #homeScreen.home-screen {
+    width: 100%;
+    height: 100dvh;
+    min-height: 100dvh;
+    overflow: hidden !important;
+  }
+
+  .home-stage {
+    width: 100%;
+    height: 100dvh;
+    min-height: 100dvh !important;
+    aspect-ratio: auto !important;
+    overflow: hidden;
+  }
+
+  .home-bg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 44%;
+  }
+
+  .home-agency {
+    left: 16px;
+    top: 12px;
+  }
+
+  .home-agency b {
+    font-size: 12px;
+  }
+
+  .home-agency span {
+    font-size: 7px;
+  }
+
+  .home-top-nav {
+    left: auto;
+    right: 14px;
+    top: 10px;
+    justify-content: flex-end;
+    gap: 7px;
+  }
+
+  .home-top-nav button {
+    width: 54px;
+    height: 54px;
+    flex: 0 0 54px;
+  }
+
+  .home-top-nav span {
+    font-size: 19px;
+  }
+
+  .home-top-nav small {
+    font-size: 8px;
+    margin-top: 2px;
+  }
+
+  .mascot-bubble {
+    display: none !important;
+  }
+
+  .start-song-btn {
+    left: 50%;
+    bottom: 92px;
+    width: min(270px, 34vw);
+    min-width: 220px;
+    padding: 10px 18px;
+    font-size: 16px;
+  }
+
+  .home-shortcuts {
+    left: 4%;
+    right: 4%;
+    bottom: 12px;
+    padding: 0;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .home-shortcuts button,
+  .home-shortcuts .home-link-button {
+    width: 100%;
+    height: 52px;
+    min-width: 0;
+    padding: 0 10px;
+    border-radius: 999px;
+    gap: 7px;
+    font-size: clamp(11px, 1.7vw, 15px);
+  }
+
+  .home-shortcuts .icon {
+    font-size: 17px;
+  }
+
+  .home-shortcuts .qa,
+  .home-link-button .qa {
+    min-width: 38px;
+    padding: 4px 7px;
+    font-size: 10px;
+  }
+
+  /* 手機橫向的選歌與其他頁面仍允許上下捲動 */
+  #songsScreen,
+  #knowledgeScreen,
+  #learningScreen,
+  #recordsScreen,
+  #resultScreen {
+    height: 100dvh;
+    min-height: 100dvh;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+}
+
+/* 某些手機瀏覽器在橫向仍回報 hover:none，而不一定正確回報 coarse */
+@media (orientation: landscape) and (max-height: 720px) and (hover: none) {
+  .home-stage {
+    height: 100dvh;
+    min-height: 100dvh !important;
+  }
+
+  .home-top-nav {
+    left: auto;
+    right: 14px;
+    top: 10px;
+  }
+
+  .mascot-bubble {
+    display: none !important;
+  }
+
+  .start-song-btn {
+    bottom: 92px;
+  }
+
+  .home-shortcuts {
+    left: 4%;
+    right: 4%;
+    bottom: 12px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .home-shortcuts button,
+  .home-shortcuts .home-link-button {
+    height: 52px;
+    font-size: clamp(11px, 1.7vw, 15px);
+  }
+}
+
+
+/* =========================================================
+   手機橫向：完整顯示主視覺，不再放大裁切
+   ========================================================= */
+@media (orientation: landscape) and (max-height: 760px) {
+  .home-stage {
+    height: 100dvh !important;
+    min-height: 100dvh !important;
+  }
+
+  .home-bg {
+    object-fit: contain !important;
+    object-position: center center !important;
+    background: #dff4ff;
+  }
+
+  .start-song-btn {
+    bottom: 72px !important;
+  }
+
+  .home-shortcuts {
+    bottom: 10px !important;
+  }
+}
