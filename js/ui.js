@@ -9,6 +9,7 @@ window.UI = {
   previewEndHandler: null,
   previewStartTime: 5,
   previewLength: 15,
+  mobileSongListExpanded: false,
 
   show(name) {
     if (name !== "songs") {
@@ -313,8 +314,15 @@ window.UI = {
     if (songCountBadge) songCountBadge.textContent = `${songs.length} 首`;
     if (totalSongCount) totalSongCount.textContent = songs.length;
 
-    list.innerHTML = songs
-      .map((song, index) => {
+    const isMobileSongList = window.matchMedia("(max-width: 680px)").matches;
+    const visibleSongs =
+      isMobileSongList && !this.mobileSongListExpanded
+        ? songs.slice(0, 3)
+        : songs;
+
+    list.innerHTML = visibleSongs
+      .map((song) => {
+        const index = songs.findIndex((item) => item.id === song.id);
         const score = scores[`${song.id}:${this.currentDifficulty}`];
         const active = song.id === selected.id;
         const favorite = favorites.includes(song.id);
@@ -356,6 +364,29 @@ window.UI = {
         this.playPreview(song);
       };
     });
+
+    const mobileSongToggle = document.getElementById("mobileSongToggle");
+    if (mobileSongToggle) {
+      const shouldShowToggle = isMobileSongList && songs.length > 3;
+      mobileSongToggle.classList.toggle("hidden", !shouldShowToggle);
+
+      if (shouldShowToggle) {
+        mobileSongToggle.textContent = this.mobileSongListExpanded
+          ? "收合歌曲清單"
+          : `顯示更多歌曲（共 ${songs.length} 首）`;
+
+        mobileSongToggle.onclick = () => {
+          this.mobileSongListExpanded = !this.mobileSongListExpanded;
+          this.renderSongs();
+
+          if (!this.mobileSongListExpanded) {
+            document
+              .querySelector(".browser-list-heading")
+              ?.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+        };
+      }
+    }
 
     const completedSongs = new Set(
       Object.keys(scores)
