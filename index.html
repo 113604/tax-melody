@@ -5,12 +5,149 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
   <meta name="theme-color" content="#5b67e8">
   <title>Tax Melody v2｜地方稅音樂節奏學習遊戲</title>
-  <link rel="stylesheet" href="css/home.css">
-  <link rel="stylesheet" href="css/song-select.css">
-  <link rel="stylesheet" href="css/game.css">
-  <link rel="stylesheet" href="css/result.css">
-  <link rel="stylesheet" href="css/learning.css">
-  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="css/home.css?v=20260803-1525">
+  <link rel="stylesheet" href="css/song-select.css?v=20260803-1525">
+  <link rel="stylesheet" href="css/game.css?v=20260803-1525">
+  <link rel="stylesheet" href="css/result.css?v=20260803-1525">
+  <link rel="stylesheet" href="css/learning.css?v=20260803-1525">
+  <link rel="stylesheet" href="css/responsive.css?v=20260803-1525">
+<style id="mobile-landscape-emergency-fix">
+    @media (orientation: landscape) and (max-height: 760px) {
+      html, body {
+        width: 100%;
+        height: 100%;
+        overflow: hidden !important;
+        background: #dff4ff;
+      }
+
+      #homeScreen.home-screen {
+        width: 100%;
+        height: 100dvh;
+        min-height: 100dvh;
+        overflow: hidden !important;
+      }
+
+      .home-stage {
+        width: 100%;
+        height: 100dvh;
+        min-width: 0 !important;
+        min-height: 100dvh !important;
+        aspect-ratio: auto !important;
+        overflow: hidden !important;
+        background: #dff4ff;
+      }
+
+      .home-bg {
+        width: 100%;
+        height: 100%;
+        object-fit: contain !important;
+        object-position: center center !important;
+        background: #dff4ff;
+      }
+
+      .home-stage::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        pointer-events: none;
+        background:
+          linear-gradient(to bottom,
+            rgba(223,244,255,.08) 0%,
+            rgba(223,244,255,0) 55%,
+            rgba(236,234,255,.38) 78%,
+            rgba(236,234,255,.82) 100%);
+      }
+
+      .home-agency,
+      .home-top-nav,
+      .start-song-btn,
+      .home-shortcuts {
+        z-index: 5;
+      }
+
+      .home-agency {
+        left: 14px !important;
+        top: 10px !important;
+      }
+
+      .home-agency b {
+        font-size: 11px !important;
+      }
+
+      .home-agency span {
+        font-size: 7px !important;
+      }
+
+      .home-top-nav {
+        left: auto !important;
+        right: 12px !important;
+        top: 8px !important;
+        justify-content: flex-end !important;
+        gap: 6px !important;
+      }
+
+      .home-top-nav button {
+        width: 50px !important;
+        height: 50px !important;
+        flex: 0 0 50px !important;
+      }
+
+      .home-top-nav span {
+        font-size: 18px !important;
+      }
+
+      .home-top-nav small {
+        font-size: 8px !important;
+        margin-top: 1px !important;
+      }
+
+      .mascot-bubble {
+        display: none !important;
+      }
+
+      .start-song-btn {
+        left: 50% !important;
+        bottom: 72px !important;
+        width: min(245px, 34vw) !important;
+        min-width: 200px !important;
+        padding: 9px 16px !important;
+        font-size: 15px !important;
+      }
+
+      .home-shortcuts {
+        left: 3% !important;
+        right: 3% !important;
+        bottom: 10px !important;
+        display: grid !important;
+        grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+        gap: 8px !important;
+      }
+
+      .home-shortcuts button,
+      .home-shortcuts .home-link-button {
+        width: 100% !important;
+        height: 46px !important;
+        min-width: 0 !important;
+        padding: 0 8px !important;
+        gap: 6px !important;
+        border-radius: 999px !important;
+        font-size: clamp(10px, 1.5vw, 13px) !important;
+      }
+
+      .home-shortcuts .icon {
+        font-size: 16px !important;
+      }
+
+      .home-shortcuts .qa,
+      .home-link-button .qa {
+        min-width: 34px !important;
+        padding: 3px 6px !important;
+        font-size: 9px !important;
+      }
+    }
+  </style>
+
 </head>
 <body>
 <div id="enterOverlay" class="enter-overlay">
