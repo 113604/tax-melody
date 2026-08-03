@@ -832,10 +832,10 @@
 
 
 /* =========================================================
-   手機版：左右滑動專輯選單
-   電腦版維持原本直式歌曲清單
+   手機版：只保留左右滑動專輯＋難度
+   電腦版維持原本 song-select-stage
    ========================================================= */
-.mobile-swipe-hint {
+.mobile-album-select {
   display: none;
 }
 
@@ -847,7 +847,7 @@
 
   .song-select-header {
     min-height: 54px;
-    margin-bottom: 6px;
+    margin-bottom: 7px;
     padding: 6px 8px;
     grid-template-columns: 40px 1fr 40px;
     border-radius: 18px;
@@ -858,321 +858,255 @@
     height: 38px;
   }
 
+  .song-select-heading > span,
+  .song-select-heading p,
+  .song-select-heading h2 small {
+    display: none !important;
+  }
+
   .song-select-heading h2 {
     font-size: 1.08rem;
   }
 
+  /* 手機隱藏原本桌機版大區塊 */
   .song-select-stage {
-    display: block;
-    height: auto !important;
-    min-height: 0 !important;
+    display: none !important;
   }
 
-  /* 上方目前歌曲資訊壓縮 */
-  .song-feature {
-    min-height: 0;
-    padding: 12px;
-    grid-template-columns: 108px minmax(0, 1fr);
+  .mobile-album-select {
+    display: block;
+    width: 100%;
+  }
+
+  .mobile-album-panel {
+    padding: 16px 10px 14px;
+    border-radius: 24px;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 50% 16%, rgba(255,255,255,.95), transparent 34%),
+      linear-gradient(155deg, rgba(255,255,255,.88), rgba(245,239,255,.82));
+  }
+
+  .mobile-album-kicker {
+    margin: 0;
+    color: #806bd1;
+    font-size: .62rem;
+    font-weight: 1000;
+    letter-spacing: .18em;
+    text-align: center;
+  }
+
+  .mobile-album-panel > h2 {
+    margin: 4px 0 12px;
+    color: var(--select-ink);
+    font-size: 1.15rem;
+    text-align: center;
+  }
+
+  .mobile-album-carousel {
+    display: flex;
     align-items: center;
     gap: 12px;
-    border-radius: 20px;
-  }
-
-  .feature-light,
-  .record-ring {
-    display: none;
-  }
-
-  .feature-cover-wrap {
-    width: 108px;
-    min-width: 108px;
-  }
-
-  .feature-cover {
-    width: 100%;
-    border-width: 4px;
-    border-radius: 18px;
-    transform: none;
-  }
-
-  .availability-badge {
-    left: 4px;
-    bottom: 4px;
-    padding: 4px 7px;
-    border-width: 2px;
-    font-size: .5rem;
-  }
-
-  .feature-copy {
-    text-align: left;
-  }
-
-  .feature-eyebrow {
-    margin: 0 0 3px;
-    font-size: .54rem;
-  }
-
-  .feature-copy h3 {
-    font-size: 1.28rem;
-    line-height: 1.08;
-  }
-
-  .feature-subtitle {
-    margin: 4px 0 7px;
-    font-size: .74rem;
-  }
-
-  .feature-tags {
-    justify-content: flex-start;
-    gap: 4px;
-  }
-
-  .feature-tags span {
-    padding: 4px 6px;
-    font-size: .52rem;
-  }
-
-  .feature-score {
-    margin-top: 6px;
-    display: flex;
-    align-items: baseline;
-    gap: 7px;
-  }
-
-  .feature-score small {
-    font-size: .5rem;
-  }
-
-  .feature-score strong {
-    margin: 0;
-    font-size: 1.45rem;
-  }
-
-  .feature-actions {
-    margin-top: 7px;
-    justify-content: flex-start;
-    gap: 7px;
-  }
-
-  .feature-favorite {
-    width: 38px;
-    height: 38px;
-    border-radius: 13px;
-    font-size: 1rem;
-  }
-
-  .feature-play {
-    min-width: 124px;
-    min-height: 38px;
-    padding: 7px 11px;
-    border-radius: 13px;
-    gap: 6px;
-  }
-
-  .feature-play span {
-    font-size: .9rem;
-  }
-
-  .feature-play b {
-    font-size: .74rem;
-  }
-
-  /* 難度區保持精簡 */
-  .song-browser {
-    min-height: 0;
-    margin-top: 7px;
-    padding: 10px 9px 11px;
-    border-radius: 20px;
-    overflow: hidden;
-  }
-
-  .difficulty-area {
-    padding-bottom: 8px;
-  }
-
-  .browser-title {
-    align-items: center;
-  }
-
-  .browser-title small,
-  .browser-list-heading small {
-    display: none;
-  }
-
-  .browser-title h3,
-  .browser-list-heading h3 {
-    font-size: .9rem;
-  }
-
-  #difficultyLabel,
-  #songCountBadge {
-    padding: 4px 7px;
-    font-size: .55rem;
-  }
-
-  .difficulty-tabs {
-    margin-top: 6px;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 5px;
-  }
-
-  .difficulty-tabs button {
-    min-height: 42px;
-    padding: 5px 2px;
-    border-radius: 12px;
-  }
-
-  .difficulty-tabs button span {
-    font-size: .5rem;
-  }
-
-  .difficulty-tabs button b {
-    font-size: .56rem;
-  }
-
-  .browser-list-heading {
-    margin: 8px 1px 0;
-  }
-
-  .mobile-swipe-hint {
-    display: block;
-    margin: 4px 0 7px;
-    color: #8877c6;
-    font-size: .64rem;
-    font-weight: 900;
-    text-align: center;
-    letter-spacing: .04em;
-  }
-
-  /* 專輯左右滑動區 */
-  .compact-song-list {
-    width: 100%;
-    display: flex;
-    align-items: stretch;
-    gap: 10px;
-    padding: 2px 14vw 8px;
+    padding: 10px 22vw 14px;
     overflow-x: auto;
     overflow-y: hidden;
     scroll-snap-type: x mandatory;
-    scroll-padding-inline: 14vw;
+    scroll-padding-inline: 22vw;
     overscroll-behavior-x: contain;
     -webkit-overflow-scrolling: touch;
   }
 
-  .compact-song-list::-webkit-scrollbar {
+  .mobile-album-carousel::-webkit-scrollbar {
     display: none;
   }
 
-  .compact-song-item {
-    flex: 0 0 148px;
-    min-height: 205px;
-    padding: 10px;
+  .mobile-album-card {
+    position: relative;
+    flex: 0 0 58vw;
+    max-width: 235px;
+    padding: 10px 10px 12px;
     display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: auto auto 1fr auto;
     justify-items: center;
-    gap: 7px;
+    gap: 6px;
     scroll-snap-align: center;
-    border-radius: 20px;
-    text-align: center;
-    transform: scale(.94);
-    opacity: .78;
-    transition:
-      transform .2s ease,
-      opacity .2s ease,
-      box-shadow .2s ease;
+    border: 1px solid rgba(255,255,255,.94);
+    border-radius: 24px;
+    background: rgba(255,255,255,.72);
+    color: var(--select-ink);
+    box-shadow: 0 10px 24px rgba(73,82,145,.1);
+    transform: scale(.88);
+    opacity: .64;
+    transition: transform .22s ease, opacity .22s ease, box-shadow .22s ease;
   }
 
-  .compact-song-item.active {
+  .mobile-album-card.active {
     transform: scale(1);
     opacity: 1;
     box-shadow:
-      0 14px 30px rgba(92,84,168,.18),
-      inset 0 0 0 2px rgba(121,92,224,.22);
+      0 18px 38px rgba(96,82,174,.2),
+      inset 0 0 0 2px rgba(121,91,224,.18);
   }
 
-  .compact-song-item:hover {
-    transform: scale(.97);
-  }
-
-  .compact-song-item.active:hover {
-    transform: scale(1);
-  }
-
-  .song-index {
-    justify-self: start;
-    font-size: .58rem;
-  }
-
-  .compact-song-cover {
-    width: 112px;
-    height: 112px;
-    border-radius: 18px;
-  }
-
-  .compact-song-copy {
+  .mobile-album-card img {
     width: 100%;
-    display: grid;
-    justify-items: center;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border: 5px solid rgba(255,255,255,.96);
+    border-radius: 20px;
+    box-shadow: 0 12px 26px rgba(65,75,136,.2);
   }
 
-  .compact-song-copy b {
+  .mobile-album-card b {
     width: 100%;
-    font-size: .78rem;
-    text-align: center;
-  }
-
-  .compact-song-copy small {
-    width: 100%;
-    font-size: .58rem;
-    text-align: center;
-  }
-
-  .compact-song-copy em {
-    margin-top: 3px;
-    font-size: .52rem;
-  }
-
-  .compact-song-status {
-    min-width: 0;
-    font-size: .82rem;
-  }
-
-  /* 任務卡維持薄型 */
-  .mission-card {
-    margin-top: 7px;
-    padding: 7px 9px;
-    grid-template-columns: 28px minmax(0, 1fr);
-    gap: 6px 8px;
-    border-radius: 14px;
-  }
-
-  .mission-icon {
-    width: 28px;
-    height: 28px;
-    border-radius: 9px;
-    font-size: .82rem;
-  }
-
-  .mission-copy small {
-    display: none;
-  }
-
-  .mission-copy b {
-    display: inline;
-    font-size: .68rem;
-  }
-
-  .mission-copy span {
-    margin-left: 5px;
-    font-size: .6rem;
-  }
-
-  .mission-copy strong {
+    overflow: hidden;
+    color: var(--select-ink);
     font-size: .88rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: center;
   }
 
-  .mission-progress {
-    height: 4px;
+  .mobile-album-card small {
+    color: #7f72bf;
+    font-size: .58rem;
+    font-weight: 900;
+  }
+
+  .mobile-album-card > span {
+    position: absolute;
+    right: 13px;
+    top: 13px;
+    width: 30px;
+    height: 30px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    color: #fff;
+    background: rgba(87,72,152,.72);
+    backdrop-filter: blur(8px);
+    font-size: .72rem;
+  }
+
+  .mobile-selected-copy {
+    margin-top: 2px;
+    text-align: center;
+  }
+
+  .mobile-selected-copy small {
+    color: #8a7ac5;
+    font-size: .58rem;
+    font-weight: 1000;
+    letter-spacing: .15em;
+  }
+
+  .mobile-selected-copy h3 {
+    margin: 3px 0 2px;
+    color: var(--select-ink);
+    font-size: 1.35rem;
+  }
+
+  .mobile-selected-copy p {
+    margin: 0;
+    color: #7680a1;
+    font-size: .76rem;
+    font-weight: 750;
+  }
+
+  .mobile-difficulty-panel {
+    margin-top: 13px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(112,125,180,.14);
+  }
+
+  .mobile-difficulty-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 7px;
+  }
+
+  .mobile-difficulty-heading span {
+    color: var(--select-ink);
+    font-size: .9rem;
+    font-weight: 1000;
+  }
+
+  .mobile-difficulty-heading b {
+    padding: 4px 8px;
+    border-radius: 999px;
+    color: #7057c8;
+    background: #eeeaff;
+    font-size: .55rem;
+  }
+
+  .mobile-difficulty-tabs {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0,1fr));
+    gap: 6px;
+  }
+
+  .mobile-difficulty-tabs button {
+    min-width: 0;
+    min-height: 48px;
+    padding: 5px 2px;
+    display: grid;
+    place-items: center;
+    gap: 1px;
+    border: 2px solid transparent;
+    border-radius: 14px;
+    color: #fff;
+    font-family: inherit;
+  }
+
+  .mobile-difficulty-tabs button span {
+    font-size: .5rem;
+  }
+
+  .mobile-difficulty-tabs button b {
+    font-size: .56rem;
+  }
+
+  .mobile-difficulty-tabs .easy {
+    background: linear-gradient(135deg, #8edab7, #58c792);
+  }
+
+  .mobile-difficulty-tabs .normal {
+    background: linear-gradient(135deg, #8fc5ef, #639ae0);
+  }
+
+  .mobile-difficulty-tabs .hard {
+    background: linear-gradient(135deg, #ffc18e, #eda268);
+  }
+
+  .mobile-difficulty-tabs .expert {
+    background: linear-gradient(135deg, #9b62e6, #7444d4);
+  }
+
+  .mobile-difficulty-tabs button.active {
+    border-color: rgba(255,255,255,.98);
+    transform: translateY(-2px);
+    box-shadow:
+      0 0 0 3px rgba(112,91,215,.12),
+      0 10px 20px rgba(75,83,145,.15);
+  }
+
+  .mobile-start-challenge {
+    width: min(280px, 82vw);
+    min-height: 52px;
+    margin: 13px auto 0;
+    display: block;
+    border: 1px solid rgba(255,255,255,.95);
+    border-radius: 999px;
+    color: #fff;
+    background: linear-gradient(135deg, #6d83eb, #825bdc);
+    box-shadow: 0 14px 28px rgba(97,83,211,.24);
+    font-family: inherit;
+    font-size: .96rem;
+    font-weight: 1000;
+  }
+
+  .mobile-start-challenge.locked,
+  .mobile-start-challenge:disabled {
+    background: linear-gradient(135deg, #b6bed1, #8e98b4);
   }
 }
