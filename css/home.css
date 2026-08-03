@@ -178,10 +178,10 @@ button,select,input{font:inherit}button{cursor:pointer}.app-shell{width:100%;hei
 .section-header{max-width:1500px;margin:0 auto 10px;border-radius:22px;padding:11px 18px;display:flex;align-items:center;justify-content:space-between}.section-header>div{display:flex;align-items:center;gap:10px}.section-header>div>span{font-weight:900;font-size:1.35rem;border:2px solid var(--ink);border-radius:50%;width:44px;height:44px;display:grid;place-items:center}.section-header h2{margin:0}.section-header h2 small{font-size:.7rem;color:var(--muted);letter-spacing:.12em}.round{width:44px;height:44px;border:0;border-radius:50%;background:#fff;color:var(--ink);font-size:1.25rem}.btn{border:0;border-radius:999px;padding:14px 24px;font-weight:900;transition:.2s transform,.2s box-shadow}.btn:hover{transform:translateY(-2px)}.primary{color:#fff;background:linear-gradient(135deg,#ffb447,#f08ac6 45%,#6d73eb);box-shadow:0 12px 28px rgba(113,99,219,.28)}.secondary{color:var(--ink);background:rgba(255,255,255,.72);border:1px solid var(--line)}.danger{color:white;background:#e66179}.modal{position:fixed;z-index:100;inset:0;background:rgba(26,29,77,.38);display:grid;place-items:center;padding:20px}.hidden{display:none!important}.modal-card{width:min(420px,92vw);border-radius:26px;padding:26px;display:flex;flex-direction:column;gap:12px;text-align:center}.modal-card h2{margin:0 0 8px}.modal-close{position:absolute;right:18px;top:14px;border:0;background:transparent;font-size:1.8rem}.settings-card{position:relative;text-align:left}.settings-card label{display:grid;grid-template-columns:120px 1fr;align-items:center;gap:10px}.settings-card .check{display:block}.toast{position:fixed;left:50%;bottom:28px;z-index:120;transform:translate(-50%,20px);background:#202862;color:#fff;padding:11px 18px;border-radius:999px;opacity:0;pointer-events:none;transition:.25s}.toast.show{opacity:1;transform:translate(-50%,0)}.fps{position:fixed;right:10px;bottom:10px;z-index:90;background:#111a;color:#fff;padding:5px 8px;border-radius:8px;font:12px monospace}.favorites-list{max-width:900px;margin:30px auto;border-radius:24px;padding:24px}.favorite-item{display:flex;justify-content:space-between;align-items:center;padding:14px;border-bottom:1px solid var(--line)}
 
 @media(max-width:700px){
-  html,body{overflow:auto}
-  #homeScreen.home-screen{overflow:auto}
-  .home-stage{width:100vw;min-width:720px}
-  .home-screen{overflow-x:auto!important}
+  html,body{overflow-x:hidden;overflow-y:auto}
+  #homeScreen.home-screen{overflow-x:hidden;overflow-y:auto}
+  .home-stage{width:100%;min-width:0}
+  .home-screen{overflow-x:hidden!important}
 }
 .enter-overlay {
   position: fixed;
