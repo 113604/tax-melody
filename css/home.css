@@ -302,3 +302,51 @@ button,select,input{font:inherit}button{cursor:pointer}.app-shell{width:100%;hei
 .home-link-button b {
   display:block;
 }
+
+
+/* 手機旋轉提示：預設完全隱藏，只有橫向手機顯示 */
+.portrait-only-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: linear-gradient(145deg, #6f7be8, #9b68e8 55%, #ef8fc6);
+}
+
+.portrait-only-card {
+  width: min(360px, 88vw);
+  padding: 30px 22px;
+  border-radius: 28px;
+  text-align: center;
+  background: rgba(255,255,255,.95);
+  box-shadow: 0 24px 70px rgba(28,31,93,.32);
+}
+
+.portrait-phone-icon {
+  font-size: 50px;
+}
+
+.portrait-only-card h2 {
+  margin: 12px 0 8px;
+  color: #35405f;
+}
+
+.portrait-only-card p,
+.portrait-only-card span {
+  color: #6f7894;
+}
+
+@media (orientation: landscape) and (max-height: 760px) and (hover: none) {
+  .portrait-only-overlay {
+    display: flex;
+  }
+}
+
+@media (orientation: landscape) and (max-height: 760px) and (pointer: coarse) {
+  .portrait-only-overlay {
+    display: flex;
+  }
+}
