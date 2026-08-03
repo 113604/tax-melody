@@ -167,19 +167,27 @@ window.TMSFX = {
     oscillator.start(now);
     oscillator.stop(now + duration + 0.03);
   },
+tap(lane = 0) {
+  // 第一聲「叮」
+  this.tone({
+    frequency: 900,
+    duration: 0.045,
+    type: "sine",
+    gain: 0.12,
+    slideTo: 1050
+  });
 
-  tap(lane = 0) {
-    const notes = [420, 500, 590, 680];
-
+  // 第二聲「叮」
+  setTimeout(() => {
     this.tone({
-      frequency: notes[lane] || 520,
-      duration: 0.065,
-      type: "square",
-      gain: 0.18,
-      slideTo: (notes[lane] || 520) * 1.28
+      frequency: 1150,
+      duration: 0.05,
+      type: "sine",
+      gain: 0.1,
+      slideTo: 1300
     });
-  },
-
+  }, 55);
+},
   judge(result) {
     const settings = {
       PERFECT: { frequency: 980, duration: 0.09, gain: 0.13 },

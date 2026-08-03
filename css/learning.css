@@ -1312,3 +1312,24 @@
         grid-template-columns: 1fr;
     }
 }
+/* 修正稅務知識補給站第二排卡片被裁切 */
+#knowledgeScreen {
+    height: 100vh !important;
+    min-height: 100vh !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+}
+
+#knowledgeTopicList {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
+    padding-bottom: 60px;
+}
+
+.knowledge-shell {
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+}
