@@ -56,3 +56,102 @@ if (loginBgm && enterOverlay && enterGameButton) {
     }
   });
 }
+
+
+/* 遊戲按鍵與判定音效：使用 Web Audio 動態產生，不需要額外 MP3 */
+window.TMSFX = {
+  context: null,
+  masterGain: null,
+
+  ensureContext() {
+    const AudioContextClass =
+      window.AudioContext || window.webkitAudioContext;
+
+    if (!AudioContextClass) return null;
+
+    if (!this.context) {
+      this.context = new AudioContextClass();
+      this.masterGain = this.context.createGain();
+      this.masterGain.connect(this.context.destination);
+    }
+
+    if (this.context.state === "suspended") {
+      this.context.resume().catch(() => {});
+    }
+
+    const volume =
+      window.TMSettings && TMSettings.values
+        ? Number(TMSettings.values.seVolume ?? 0.7)
+        : 0.7;
+
+    this.masterGain.gain.value = Math.max(0, Math.min(1, volume));
+    return this.context;
+  },
+
+  tone({
+    frequency = 520,
+    duration = 0.055,
+    type = "sine",
+    gain = 0.12,
+    slideTo = null
+  } = {}) {
+    const ctx = this.ensureContext();
+    if (!ctx || !this.masterGain || gain <= 0) return;
+
+    const now = ctx.currentTime;
+    const oscillator = ctx.createOscillator();
+    const envelope = ctx.createGain();
+
+    oscillator.type = type;
+    oscillator.frequency.setValueAtTime(frequency, now);
+
+    if (slideTo) {
+      oscillator.frequency.exponentialRampToValueAtTime(
+        Math.max(20, slideTo),
+        now + duration
+      );
+    }
+
+    envelope.gain.setValueAtTime(0.0001, now);
+    envelope.gain.exponentialRampToValueAtTime(gain, now + 0.005);
+    envelope.gain.exponentialRampToValueAtTime(
+      0.0001,
+      now + duration
+    );
+
+    oscillator.connect(envelope);
+    envelope.connect(this.masterGain);
+
+    oscillator.start(now);
+    oscillator.stop(now + duration + 0.02);
+  },
+
+  tap(lane = 0) {
+    const notes = [430, 500, 570, 640];
+
+    this.tone({
+      frequency: notes[lane] || 520,
+      duration: 0.045,
+      type: "triangle",
+      gain: 0.105,
+      slideTo: (notes[lane] || 520) * 1.16
+    });
+  },
+
+  judge(result) {
+    const settings = {
+      PERFECT: { frequency: 880, duration: 0.075, gain: 0.08 },
+      GREAT: { frequency: 720, duration: 0.065, gain: 0.065 },
+      GOOD: { frequency: 560, duration: 0.055, gain: 0.05 }
+    };
+
+    const item = settings[result];
+    if (!item) return;
+
+    this.tone({
+      ...item,
+      type: "sine",
+      slideTo: item.frequency * 1.1
+    });
+  }
+};
