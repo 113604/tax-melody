@@ -58,47 +58,89 @@ if (loginBgm && enterOverlay && enterGameButton) {
 }
 
 
-/* 遊戲按鍵與判定音效：使用 Web Audio 動態產生，不需要額外 MP3 */
+/* =========================================================
+   遊戲按鍵音效 V2
+   - 點擊登入、觸碰畫面時先解除手機瀏覽器音效限制
+   - 不需要額外 MP3
+   ========================================================= */
 window.TMSFX = {
   context: null,
   masterGain: null,
+  unlocked: false,
 
-  ensureContext() {
+  createContext() {
+    if (this.context) return this.context;
+
     const AudioContextClass =
       window.AudioContext || window.webkitAudioContext;
 
     if (!AudioContextClass) return null;
 
-    if (!this.context) {
-      this.context = new AudioContextClass();
-      this.masterGain = this.context.createGain();
-      this.masterGain.connect(this.context.destination);
-    }
+    this.context = new AudioContextClass();
+    this.masterGain = this.context.createGain();
+    this.masterGain.connect(this.context.destination);
 
-    if (this.context.state === "suspended") {
-      this.context.resume().catch(() => {});
-    }
-
-    const volume =
-      window.TMSettings && TMSettings.values
-        ? Number(TMSettings.values.seVolume ?? 0.7)
-        : 0.7;
-
-    this.masterGain.gain.value = Math.max(0, Math.min(1, volume));
     return this.context;
   },
 
-  tone({
+  async unlock() {
+    const ctx = this.createContext();
+    if (!ctx) return false;
+
+    try {
+      if (ctx.state === "suspended") {
+        await ctx.resume();
+      }
+
+      /* 播放極短靜音，讓部分 Android 瀏覽器完成解鎖 */
+      const buffer = ctx.createBuffer(1, 1, ctx.sampleRate);
+      const source = ctx.createBufferSource();
+      source.buffer = buffer;
+      source.connect(ctx.destination);
+      source.start(0);
+
+      this.unlocked = ctx.state === "running";
+      return this.unlocked;
+    } catch (error) {
+      console.warn("音效解鎖失敗：", error);
+      return false;
+    }
+  },
+
+  getVolume() {
+    const value =
+      window.TMSettings && TMSettings.values
+        ? Number(TMSettings.values.seVolume ?? 0.8)
+        : 0.8;
+
+    if (!Number.isFinite(value)) return 0.8;
+    if (value <= 0) return 0;
+
+    /* 避免手機上太小聲，保留設定但設最低可聽音量 */
+    return Math.min(1, Math.max(0.45, value));
+  },
+
+  async tone({
     frequency = 520,
-    duration = 0.055,
-    type = "sine",
-    gain = 0.12,
+    duration = 0.07,
+    type = "square",
+    gain = 0.2,
     slideTo = null
   } = {}) {
-    const ctx = this.ensureContext();
-    if (!ctx || !this.masterGain || gain <= 0) return;
+    const ctx = this.createContext();
+    if (!ctx || !this.masterGain) return;
 
-    const now = ctx.currentTime;
+    if (ctx.state !== "running") {
+      const ok = await this.unlock();
+      if (!ok) return;
+    }
+
+    const volume = this.getVolume();
+    if (volume <= 0) return;
+
+    this.masterGain.gain.value = volume;
+
+    const now = ctx.currentTime + 0.005;
     const oscillator = ctx.createOscillator();
     const envelope = ctx.createGain();
 
@@ -107,13 +149,13 @@ window.TMSFX = {
 
     if (slideTo) {
       oscillator.frequency.exponentialRampToValueAtTime(
-        Math.max(20, slideTo),
+        Math.max(30, slideTo),
         now + duration
       );
     }
 
     envelope.gain.setValueAtTime(0.0001, now);
-    envelope.gain.exponentialRampToValueAtTime(gain, now + 0.005);
+    envelope.gain.exponentialRampToValueAtTime(gain, now + 0.008);
     envelope.gain.exponentialRampToValueAtTime(
       0.0001,
       now + duration
@@ -123,26 +165,26 @@ window.TMSFX = {
     envelope.connect(this.masterGain);
 
     oscillator.start(now);
-    oscillator.stop(now + duration + 0.02);
+    oscillator.stop(now + duration + 0.03);
   },
 
   tap(lane = 0) {
-    const notes = [430, 500, 570, 640];
+    const notes = [420, 500, 590, 680];
 
     this.tone({
       frequency: notes[lane] || 520,
-      duration: 0.045,
-      type: "triangle",
-      gain: 0.105,
-      slideTo: (notes[lane] || 520) * 1.16
+      duration: 0.065,
+      type: "square",
+      gain: 0.18,
+      slideTo: (notes[lane] || 520) * 1.28
     });
   },
 
   judge(result) {
     const settings = {
-      PERFECT: { frequency: 880, duration: 0.075, gain: 0.08 },
-      GREAT: { frequency: 720, duration: 0.065, gain: 0.065 },
-      GOOD: { frequency: 560, duration: 0.055, gain: 0.05 }
+      PERFECT: { frequency: 980, duration: 0.09, gain: 0.13 },
+      GREAT: { frequency: 790, duration: 0.08, gain: 0.11 },
+      GOOD: { frequency: 610, duration: 0.07, gain: 0.09 }
     };
 
     const item = settings[result];
@@ -150,8 +192,37 @@ window.TMSFX = {
 
     this.tone({
       ...item,
-      type: "sine",
-      slideTo: item.frequency * 1.1
+      type: "triangle",
+      slideTo: item.frequency * 1.12
     });
   }
 };
+
+/* 第一次點擊或觸碰頁面時先解鎖音效 */
+document.addEventListener(
+  "pointerdown",
+  function unlockGameSound() {
+    if (window.TMSFX) {
+      TMSFX.unlock();
+    }
+  },
+  { passive: true, once: true }
+);
+
+document.addEventListener(
+  "keydown",
+  function unlockGameSoundByKeyboard() {
+    if (window.TMSFX) {
+      TMSFX.unlock();
+    }
+  },
+  { once: true }
+);
+
+if (enterGameButton) {
+  enterGameButton.addEventListener("click", function () {
+    if (window.TMSFX) {
+      TMSFX.unlock();
+    }
+  });
+}
