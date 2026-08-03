@@ -5,12 +5,100 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
   <meta name="theme-color" content="#5b67e8">
   <title>Tax Melody v2｜地方稅音樂節奏學習遊戲</title>
-  <link rel="stylesheet" href="css/home.css">
-  <link rel="stylesheet" href="css/song-select.css">
-  <link rel="stylesheet" href="css/game.css">
-  <link rel="stylesheet" href="css/result.css">
-  <link rel="stylesheet" href="css/learning.css">
-  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="css/home.css?v=20260803-1517">
+  <link rel="stylesheet" href="css/song-select.css?v=20260803-1517">
+  <link rel="stylesheet" href="css/game.css?v=20260803-1517">
+  <link rel="stylesheet" href="css/result.css?v=20260803-1517">
+  <link rel="stylesheet" href="css/learning.css?v=20260803-1517">
+  <link rel="stylesheet" href="css/responsive.css?v=20260803-1517">
+
+  <style id="mobile-landscape-emergency-fix">
+    @media (orientation: landscape) and (max-height: 720px) {
+      html, body {
+        width: 100%;
+        height: 100%;
+        overflow: hidden !important;
+      }
+
+      #homeScreen.home-screen {
+        width: 100%;
+        height: 100dvh;
+        min-height: 100dvh;
+        overflow: hidden !important;
+      }
+
+      .home-stage {
+        width: 100%;
+        height: 100dvh;
+        min-width: 0 !important;
+        min-height: 100dvh !important;
+        aspect-ratio: auto !important;
+        overflow: hidden !important;
+      }
+
+      .home-bg {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center 44%;
+      }
+
+      .home-top-nav {
+        left: auto !important;
+        right: 14px !important;
+        top: 10px !important;
+        justify-content: flex-end !important;
+        gap: 7px !important;
+      }
+
+      .home-top-nav button {
+        width: 54px !important;
+        height: 54px !important;
+        flex: 0 0 54px !important;
+      }
+
+      .home-top-nav span {
+        font-size: 19px !important;
+      }
+
+      .home-top-nav small {
+        font-size: 8px !important;
+        margin-top: 2px !important;
+      }
+
+      .mascot-bubble {
+        display: none !important;
+      }
+
+      .start-song-btn {
+        left: 50% !important;
+        bottom: 92px !important;
+        width: min(270px, 34vw) !important;
+        min-width: 220px !important;
+        padding: 10px 18px !important;
+        font-size: 16px !important;
+      }
+
+      .home-shortcuts {
+        left: 4% !important;
+        right: 4% !important;
+        bottom: 12px !important;
+        grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+        gap: 10px !important;
+      }
+
+      .home-shortcuts button,
+      .home-shortcuts .home-link-button {
+        width: 100% !important;
+        height: 52px !important;
+        min-width: 0 !important;
+        padding: 0 10px !important;
+        gap: 7px !important;
+        font-size: clamp(11px, 1.7vw, 15px) !important;
+      }
+    }
+  </style>
+
 </head>
 <body>
 <div id="enterOverlay" class="enter-overlay">
