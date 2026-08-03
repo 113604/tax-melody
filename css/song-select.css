@@ -832,206 +832,347 @@
 
 
 /* =========================================================
-   手機精簡選歌版
+   手機版：左右滑動專輯選單
+   電腦版維持原本直式歌曲清單
    ========================================================= */
-.mobile-song-toggle {
-  width: 100%;
-  min-height: 46px;
-  margin: 8px 0 4px;
-  border: 1px solid rgba(122, 102, 205, .16);
-  border-radius: 999px;
-  color: #6f58c8;
-  background: linear-gradient(145deg, rgba(255,255,255,.94), rgba(241,236,255,.9));
-  box-shadow: 0 9px 20px rgba(84, 74, 151, .1);
-  font-family: inherit;
-  font-size: .86rem;
-  font-weight: 950;
-  cursor: pointer;
+.mobile-swipe-hint {
+  display: none;
 }
 
 @media (max-width: 680px) {
   .song-select-screen {
     padding: 6px;
+    overflow-y: auto;
   }
 
   .song-select-header {
-    min-height: 56px;
-    margin-bottom: 7px;
+    min-height: 54px;
+    margin-bottom: 6px;
     padding: 6px 8px;
+    grid-template-columns: 40px 1fr 40px;
+    border-radius: 18px;
+  }
+
+  .song-select-header .round {
+    width: 38px;
+    height: 38px;
+  }
+
+  .song-select-heading h2 {
+    font-size: 1.08rem;
   }
 
   .song-select-stage {
-    gap: 9px;
+    display: block;
+    height: auto !important;
+    min-height: 0 !important;
   }
 
+  /* 上方目前歌曲資訊壓縮 */
   .song-feature {
-    padding: 14px 13px 16px;
-    gap: 9px;
-    border-radius: 21px;
+    min-height: 0;
+    padding: 12px;
+    grid-template-columns: 108px minmax(0, 1fr);
+    align-items: center;
+    gap: 12px;
+    border-radius: 20px;
+  }
+
+  .feature-light,
+  .record-ring {
+    display: none;
   }
 
   .feature-cover-wrap {
-    width: min(54vw, 225px);
+    width: 108px;
+    min-width: 108px;
   }
 
   .feature-cover {
-    width: 80%;
-    border-width: 5px;
-    border-radius: 23px;
-  }
-
-  .record-ring {
-    inset: -4%;
+    width: 100%;
+    border-width: 4px;
+    border-radius: 18px;
+    transform: none;
   }
 
   .availability-badge {
-    left: 7%;
-    bottom: 8%;
-    padding: 6px 10px;
+    left: 4px;
+    bottom: 4px;
+    padding: 4px 7px;
     border-width: 2px;
-    font-size: .58rem;
+    font-size: .5rem;
+  }
+
+  .feature-copy {
+    text-align: left;
   }
 
   .feature-eyebrow {
-    margin-bottom: 4px;
-    font-size: .65rem;
+    margin: 0 0 3px;
+    font-size: .54rem;
   }
 
   .feature-copy h3 {
-    font-size: clamp(1.5rem, 7vw, 2rem);
+    font-size: 1.28rem;
     line-height: 1.08;
   }
 
   .feature-subtitle {
-    margin: 5px 0 9px;
-    font-size: .83rem;
+    margin: 4px 0 7px;
+    font-size: .74rem;
   }
 
   .feature-tags {
-    gap: 5px;
+    justify-content: flex-start;
+    gap: 4px;
   }
 
   .feature-tags span {
-    padding: 5px 8px;
-    font-size: .61rem;
+    padding: 4px 6px;
+    font-size: .52rem;
   }
 
   .feature-score {
-    margin-top: 10px;
+    margin-top: 6px;
+    display: flex;
+    align-items: baseline;
+    gap: 7px;
   }
 
   .feature-score small {
-    font-size: .62rem;
+    font-size: .5rem;
   }
 
   .feature-score strong {
-    font-size: 2.15rem;
+    margin: 0;
+    font-size: 1.45rem;
   }
 
   .feature-actions {
-    margin-top: 11px;
-    gap: 9px;
+    margin-top: 7px;
+    justify-content: flex-start;
+    gap: 7px;
   }
 
   .feature-favorite {
-    width: 48px;
-    height: 48px;
-    border-radius: 17px;
-    font-size: 1.3rem;
+    width: 38px;
+    height: 38px;
+    border-radius: 13px;
+    font-size: 1rem;
   }
 
   .feature-play {
-    min-width: 0;
-    width: min(210px, 62vw);
-    min-height: 50px;
-    padding: 9px 16px;
-    border-radius: 18px;
+    min-width: 124px;
+    min-height: 38px;
+    padding: 7px 11px;
+    border-radius: 13px;
+    gap: 6px;
+  }
+
+  .feature-play span {
+    font-size: .9rem;
   }
 
   .feature-play b {
-    font-size: .92rem;
+    font-size: .74rem;
   }
 
+  /* 難度區保持精簡 */
   .song-browser {
     min-height: 0;
-    padding: 11px 10px 12px;
-    border-radius: 21px;
+    margin-top: 7px;
+    padding: 10px 9px 11px;
+    border-radius: 20px;
+    overflow: hidden;
   }
 
   .difficulty-area {
-    padding: 0 0 10px;
+    padding-bottom: 8px;
+  }
+
+  .browser-title {
+    align-items: center;
+  }
+
+  .browser-title small,
+  .browser-list-heading small {
+    display: none;
   }
 
   .browser-title h3,
   .browser-list-heading h3 {
-    font-size: 1rem;
+    font-size: .9rem;
+  }
+
+  #difficultyLabel,
+  #songCountBadge {
+    padding: 4px 7px;
+    font-size: .55rem;
   }
 
   .difficulty-tabs {
-    margin-top: 8px;
-    gap: 7px;
+    margin-top: 6px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 5px;
   }
 
   .difficulty-tabs button {
-    min-height: 50px;
-    border-radius: 15px;
-  }
-
-  .browser-list-heading {
-    margin: 10px 1px 7px;
-  }
-
-  .compact-song-list {
-    gap: 6px;
-    padding: 1px;
-  }
-
-  .compact-song-item {
-    min-height: 66px;
-    padding: 7px 8px;
-    grid-template-columns: 24px 46px minmax(0, 1fr) 28px;
-    gap: 7px;
-    border-radius: 16px;
-  }
-
-  .compact-song-cover {
-    width: 46px;
-    height: 46px;
+    min-height: 42px;
+    padding: 5px 2px;
     border-radius: 12px;
   }
 
+  .difficulty-tabs button span {
+    font-size: .5rem;
+  }
+
+  .difficulty-tabs button b {
+    font-size: .56rem;
+  }
+
+  .browser-list-heading {
+    margin: 8px 1px 0;
+  }
+
+  .mobile-swipe-hint {
+    display: block;
+    margin: 4px 0 7px;
+    color: #8877c6;
+    font-size: .64rem;
+    font-weight: 900;
+    text-align: center;
+    letter-spacing: .04em;
+  }
+
+  /* 專輯左右滑動區 */
+  .compact-song-list {
+    width: 100%;
+    display: flex;
+    align-items: stretch;
+    gap: 10px;
+    padding: 2px 14vw 8px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 14vw;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .compact-song-list::-webkit-scrollbar {
+    display: none;
+  }
+
+  .compact-song-item {
+    flex: 0 0 148px;
+    min-height: 205px;
+    padding: 10px;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto 1fr auto;
+    justify-items: center;
+    gap: 7px;
+    scroll-snap-align: center;
+    border-radius: 20px;
+    text-align: center;
+    transform: scale(.94);
+    opacity: .78;
+    transition:
+      transform .2s ease,
+      opacity .2s ease,
+      box-shadow .2s ease;
+  }
+
+  .compact-song-item.active {
+    transform: scale(1);
+    opacity: 1;
+    box-shadow:
+      0 14px 30px rgba(92,84,168,.18),
+      inset 0 0 0 2px rgba(121,92,224,.22);
+  }
+
+  .compact-song-item:hover {
+    transform: scale(.97);
+  }
+
+  .compact-song-item.active:hover {
+    transform: scale(1);
+  }
+
+  .song-index {
+    justify-self: start;
+    font-size: .58rem;
+  }
+
+  .compact-song-cover {
+    width: 112px;
+    height: 112px;
+    border-radius: 18px;
+  }
+
+  .compact-song-copy {
+    width: 100%;
+    display: grid;
+    justify-items: center;
+  }
+
   .compact-song-copy b {
-    font-size: .82rem;
+    width: 100%;
+    font-size: .78rem;
+    text-align: center;
   }
 
   .compact-song-copy small {
-    font-size: .61rem;
+    width: 100%;
+    font-size: .58rem;
+    text-align: center;
   }
 
   .compact-song-copy em {
     margin-top: 3px;
-    font-size: .56rem;
+    font-size: .52rem;
   }
 
+  .compact-song-status {
+    min-width: 0;
+    font-size: .82rem;
+  }
+
+  /* 任務卡維持薄型 */
   .mission-card {
-    margin-top: 8px;
-    padding: 9px;
-    grid-template-columns: 38px minmax(0, 1fr);
-    border-radius: 17px;
+    margin-top: 7px;
+    padding: 7px 9px;
+    grid-template-columns: 28px minmax(0, 1fr);
+    gap: 6px 8px;
+    border-radius: 14px;
   }
 
   .mission-icon {
-    width: 38px;
-    height: 38px;
-    border-radius: 13px;
-    font-size: 1.05rem;
+    width: 28px;
+    height: 28px;
+    border-radius: 9px;
+    font-size: .82rem;
   }
 
   .mission-copy small {
     display: none;
   }
 
+  .mission-copy b {
+    display: inline;
+    font-size: .68rem;
+  }
+
+  .mission-copy span {
+    margin-left: 5px;
+    font-size: .6rem;
+  }
+
+  .mission-copy strong {
+    font-size: .88rem;
+  }
+
   .mission-progress {
-    height: 6px;
+    height: 4px;
   }
 }
