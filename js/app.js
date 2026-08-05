@@ -114,11 +114,41 @@ document.addEventListener("DOMContentLoaded", function () {
   const restartButton = document.getElementById("restartButton");
   const leaveSongButton = document.getElementById("leaveSongButton");
   const pauseSettingsButton = document.getElementById("pauseSettingsButton");
+  const gameHelpButton = document.getElementById("gameHelpButton");
+  const closeGameGuideButton = document.getElementById("closeGameGuideButton");
+  const startGameFromGuideButton = document.getElementById("startGameFromGuideButton");
+  const gameGuideModal = document.getElementById("gameGuideModal");
 
   if (pauseButton) {
     pauseButton.onclick = function () {
       TMGame.togglePause(true);
     };
+  }
+
+  if (gameHelpButton) {
+    gameHelpButton.onclick = function () {
+      TMGame.openGuide(true);
+    };
+  }
+
+  if (closeGameGuideButton) {
+    closeGameGuideButton.onclick = function () {
+      TMGame.closeGuide();
+    };
+  }
+
+  if (startGameFromGuideButton) {
+    startGameFromGuideButton.onclick = function () {
+      TMGame.closeGuide();
+    };
+  }
+
+  if (gameGuideModal) {
+    gameGuideModal.addEventListener("click", function (event) {
+      if (event.target === gameGuideModal) {
+        TMGame.closeGuide();
+      }
+    });
   }
 
   if (resumeButton) {
