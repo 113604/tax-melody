@@ -245,6 +245,7 @@
         <div class="hud-block"><small>COMBO</small><strong id="comboValue">0</strong></div>
         <div class="song-progress"><span id="gameSongTitle">守護第一時間</span><div><i id="progressBar"></i></div><small><span id="currentTime">0:00</span> / <span id="durationTime">0:00</span></small></div>
         <div class="life"><small>LIFE ♥</small><strong id="lifeValue">1000</strong></div>
+        <button id="gameHelpButton" class="game-help-btn" type="button" aria-label="開啟遊戲說明">🎮 遊戲說明</button>
         <button id="pauseButton" class="pause-btn" aria-label="暫停">Ⅱ</button>
       </header>
 
@@ -434,6 +435,50 @@
         <section id="recordsList" class="records-list" aria-label="歌曲學習紀錄"></section>
       </main>
     </section>
+
+
+    <div id="gameGuideModal" class="modal hidden game-guide-modal" role="dialog" aria-modal="true" aria-labelledby="gameGuideTitle">
+      <div class="modal-card glass game-guide-card">
+        <button id="closeGameGuideButton" class="modal-close game-guide-close" type="button" aria-label="關閉遊戲說明">×</button>
+
+        <div class="game-guide-heading">
+          <span class="game-guide-music">♫</span>
+          <div>
+            <small>HOW TO PLAY</small>
+            <h2 id="gameGuideTitle">節奏挑戰玩法</h2>
+            <p>看準音符，跟著節奏按下對應按鍵！</p>
+          </div>
+        </div>
+
+        <div class="game-guide-steps">
+          <article>
+            <span class="guide-number">1</span>
+            <div class="guide-demo guide-note-demo"><i></i><b></b></div>
+            <div><strong>注意落下的音符</strong><p>音符會沿著四條軌道往判定線移動。</p></div>
+          </article>
+
+          <article>
+            <span class="guide-number">2</span>
+            <div class="guide-demo guide-key-demo"><kbd>D</kbd><kbd>F</kbd><kbd>J</kbd><kbd>K</kbd></div>
+            <div><strong>到達判定線就按</strong><p>電腦按 D、F、J、K；手機直接點擊對應軌道。</p></div>
+          </article>
+
+          <article>
+            <span class="guide-number">3</span>
+            <div class="guide-demo guide-combo-demo">COMBO<br><b>12</b></div>
+            <div><strong>連續命中累積高分</strong><p>抓準節奏可獲得 PERFECT，並提高 Combo。</p></div>
+          </article>
+        </div>
+
+        <div class="game-guide-tip">
+          <span>💡</span> 音符碰到下方彩色判定線時再按，會更容易命中！
+        </div>
+
+        <button id="startGameFromGuideButton" class="btn primary game-guide-start" type="button">
+          我知道了，開始挑戰！
+        </button>
+      </div>
+    </div>
 
     <div id="pauseModal" class="modal hidden" role="dialog" aria-modal="true"><div class="modal-card glass"><h2>PAUSE</h2><button id="resumeButton" class="btn primary">繼續</button><button id="restartButton" class="btn secondary">重新開始</button><button id="pauseSettingsButton" class="btn secondary">設定</button><button id="leaveSongButton" class="btn danger">離開歌曲</button></div></div>
 
